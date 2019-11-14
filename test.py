@@ -1,3 +1,0 @@
-print
-test
-123
