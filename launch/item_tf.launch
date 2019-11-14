@@ -1,0 +1,25 @@
+<launch>
+
+  <!-- 
+  <group ns="/robot1">
+    <node pkg="turtlebot3_teleop" type="turtlebot3_teleop_key" name="teleop" />
+  </group>
+  -->
+
+  <!-- 广播以map为坐标系 的robot1的姿态信息 -->
+  <node name="robot1_tf_broadcaster" pkg="item" type="robot_tf_broadcaster.py" respawn="false" >
+    <param name="robot" type="string" value="robot1" />
+  </node>
+
+  <!-- 广播以map为坐标系 的robot2的姿态信息 -->
+  <node name="robot2_tf_broadcaster" pkg="item" type="robot_tf_broadcaster.py" respawn="false" >
+    <param name="robot" type="string" value="robot2" />
+  </node>
+
+  <!-- 
+    启动监听节点，监听robot1和robot2的坐标，得到以robot2为原点的robot1的姿态信息
+    计算robot2的角速度和线速度，将/robot2/cmd_vel topic发布出去，从而让robot2跟随robot1
+  -->
+  <node name="robot_pointer" pkg="item" type="robot_tf_listener.py" respawn="false" ></node>
+
+</launch>
